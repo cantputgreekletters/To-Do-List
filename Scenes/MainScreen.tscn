@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq8764g02vpdd"]
+
+[ext_resource type="PackedScene" uid="uid://kuiendx2btv" path="res://Scenes/TaskContainer.tscn" id="1_wbu70"]
+[ext_resource type="Script" uid="uid://b5f04lu5dd55w" path="res://Scripts/Saving_Indicator.gd" id="2_ewbgq"]
+
+[node name="Control" type="VBoxContainer"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_right = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="HBoxContainer" parent="."]
+clip_children = 1
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TaskContainer" parent="MainContainer/ScrollContainer" node_paths=PackedStringArray("Create_Button") instance=ExtResource("1_wbu70")]
+clip_children = 1
+clip_contents = true
+layout_mode = 2
+Create_Button = NodePath("../../../SettingsContainer/CreateButton")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="SettingsContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+alignment = 1
+
+[node name="CreateButton" type="Button" parent="SettingsContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Create"
+
+[node name="SavingIndicator" type="Label" parent="SettingsContainer"]
+layout_mode = 2
+text = "Saving..."
+script = ExtResource("2_ewbgq")

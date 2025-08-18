@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dublmxoj3haxd"]
+
+[ext_resource type="Script" uid="uid://bxuum21bbqj61" path="res://Scripts/Task.gd" id="1_ow5st"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_btgn6"]
+line_spacing = 8.0
+font_size = 32
+
+[node name="Task" type="HBoxContainer"]
+custom_minimum_size = Vector2(500, 50)
+offset_right = 500.0
+offset_bottom = 108.0
+size_flags_horizontal = 3
+script = ExtResource("1_ow5st")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+text = "asdsadasdnsadnsaiodnasiodnsiaodasiodsandiosandiosanonaiosd"
+label_settings = SubResource("LabelSettings_btgn6")
+clip_text = true
+
+[node name="Button" type="CheckButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+
+[node name="DeleteButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+text = "DELETE"
+
+[connection signal="toggled" from="Button" to="." method="_on_button_toggled"]
+[connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]

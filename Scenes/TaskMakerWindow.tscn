@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmve84p5c6yvb"]
+
+[ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_dw6j0"]
+[ext_resource type="Script" uid="uid://comweo0bocn5t" path="res://Scripts/TaskMakerWindow.gd" id="1_fx0mm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fx0mm"]
+font_color = Color(1, 0, 0, 1)
+
+[node name="TaskMakerWindow" type="Window"]
+title = "Task Maker"
+initial_position = 2
+size = Vector2i(300, 350)
+theme = ExtResource("1_dw6j0")
+script = ExtResource("1_fx0mm")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+offset_right = 300.0
+offset_bottom = 350.0
+size_flags_stretch_ratio = 16.05
+
+[node name="TextInput Container" type="VBoxContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TitleInput" type="LineEdit" parent="MainContainer/TextInput Container"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../DescriptionInput")
+focus_next = NodePath("../DescriptionInput")
+focus_previous = NodePath("../DescriptionInput")
+placeholder_text = "Title"
+
+[node name="DescriptionInput" type="TextEdit" parent="MainContainer/TextInput Container"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_top = NodePath("../TitleInput")
+focus_next = NodePath("../TitleInput")
+focus_previous = NodePath("../TitleInput")
+placeholder_text = "Description"
+
+[node name="FailLabel" type="Label" parent="MainContainer/TextInput Container"]
+layout_mode = 2
+text = "Title was not filled!"
+label_settings = SubResource("LabelSettings_fx0mm")
+horizontal_alignment = 1
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="OkButton" type="Button" parent="MainContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OK"
+
+[node name="DiscardButton" type="Button" parent="MainContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DISCARD"
