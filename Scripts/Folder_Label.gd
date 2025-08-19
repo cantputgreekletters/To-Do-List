@@ -6,6 +6,7 @@ var title : String
 
 func _ready():
     mouse_filter = Control.MOUSE_FILTER_STOP
+    horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 func _init(Name : String) -> void:
     ChangeTitle(Name)

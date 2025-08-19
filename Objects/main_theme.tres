@@ -1,7 +1,19 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bmv0t3c2gfe23"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bmv0t3c2gfe23"]
+
+[ext_resource type="FontFile" uid="uid://qj1qd8oa4j6i" path="res://Fonts/InterVariable.ttf" id="1_7tjb7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rpeq2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7tjb7"]
+bg_color = Color(0, 0.54902, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1orng"]
-bg_color = Color(0.0350842, 0.0192209, 3.00817e-09, 1)
+bg_color = Color(0.099986, 0.099986, 0.099986, 1)
 
 [resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/fonts/font = ExtResource("1_7tjb7")
+Button/styles/normal = SubResource("StyleBoxFlat_rpeq2")
+Button/styles/pressed = SubResource("StyleBoxFlat_7tjb7")
 Label/styles/normal = SubResource("StyleBoxFlat_1orng")

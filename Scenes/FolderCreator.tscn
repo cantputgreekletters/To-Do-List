@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1wc4nwp3hfsl"]
+[gd_scene load_steps=5 format=3 uid="uid://b1wc4nwp3hfsl"]
 
 [ext_resource type="Script" uid="uid://d1wjwok3hjjnk" path="res://Scripts/Folder_Creator.gd" id="1_jnbmi"]
+[ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_mm5ue"]
 [ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="2_da4q2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_da4q2"]
@@ -9,6 +10,7 @@ font_color = Color(1, 0, 0, 1)
 [node name="FolderCreator" type="Window"]
 initial_position = 2
 size = Vector2i(300, 100)
+theme = ExtResource("1_mm5ue")
 script = ExtResource("1_jnbmi")
 
 [node name="Container" type="VBoxContainer" parent="."]

@@ -1,30 +1,43 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq8764g02vpdd"]
+[gd_scene load_steps=5 format=3 uid="uid://bq8764g02vpdd"]
 
+[ext_resource type="Theme" uid="uid://bmv0t3c2gfe23" path="res://Objects/main_theme.tres" id="1_ip4yt"]
 [ext_resource type="PackedScene" uid="uid://kuiendx2btv" path="res://Scenes/TaskContainer.tscn" id="1_wbu70"]
 [ext_resource type="PackedScene" uid="uid://cokgdecahl3ud" path="res://Scenes/FolderTabContainer.tscn" id="2_0prsd"]
 [ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="2_ewbgq"]
 
-[node name="Control" type="VBoxContainer"]
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="BackGround" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.025773, 0.181191, 0.242183, 0.980392)
+
+[node name="Main" type="VBoxContainer" parent="."]
 clip_contents = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 3.0
-offset_right = 3.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_ip4yt")
 
-[node name="MainContainer" type="HBoxContainer" parent="."]
+[node name="MainContainer" type="HBoxContainer" parent="Main"]
 clip_children = 1
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Main/MainContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TaskContainer" parent="MainContainer/ScrollContainer" node_paths=PackedStringArray("Create_Button", "Save_Button", "Save_Indicator") instance=ExtResource("1_wbu70")]
+[node name="TaskContainer" parent="Main/MainContainer/ScrollContainer" node_paths=PackedStringArray("Create_Button", "Save_Button", "Save_Indicator") instance=ExtResource("1_wbu70")]
 clip_children = 1
 clip_contents = true
 layout_mode = 2
@@ -32,26 +45,26 @@ Create_Button = NodePath("../../../SettingsContainer/CreateButton")
 Save_Button = NodePath("../../../SettingsContainer/SaveButton")
 Save_Indicator = NodePath("../../../SettingsContainer/SavingIndicator")
 
-[node name="TabContainer" parent="MainContainer" instance=ExtResource("2_0prsd")]
+[node name="TabContainer" parent="Main/MainContainer" instance=ExtResource("2_0prsd")]
 layout_mode = 2
 
-[node name="SettingsContainer" type="HBoxContainer" parent="."]
+[node name="SettingsContainer" type="HBoxContainer" parent="Main"]
 layout_mode = 2
 alignment = 1
 
-[node name="CreateButton" type="Button" parent="SettingsContainer"]
+[node name="CreateButton" type="Button" parent="Main/SettingsContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Create"
 
-[node name="SaveButton" type="Button" parent="SettingsContainer"]
+[node name="SaveButton" type="Button" parent="Main/SettingsContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Save"
 
-[node name="SavingIndicator" type="Label" parent="SettingsContainer"]
+[node name="SavingIndicator" type="Label" parent="Main/SettingsContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Saving..."

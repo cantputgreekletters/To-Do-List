@@ -11,7 +11,7 @@ var folder_tab_container : Folder_Tab_Container
 func _ready():
     Global.has_active_window = true
     SubmitButton.connect("pressed", _On_Press_Submit)
-    
+    connect("close_requested", queue_free)
 
 func _exit_tree() -> void:
     Global.has_active_window = false

@@ -16,13 +16,14 @@ func _ready():
     Global.has_active_window = true
     OkButton.connect("pressed", _OnOkPress)
     DiscardButton.connect("pressed", _OnDiscardPress)
-
+    connect("close_requested", _OnDiscardPress)
+    
 func _exit_tree() -> void:
     Global.has_active_window = false
 
 func Init(Task_Container : TaskContainer) -> void:
     task_container = Task_Container
-    connect("close_requested", _OnDiscardPress)
+    
 
 func _check_if_filled_title() -> bool:
     var valid : bool = TitleInput.text.length() > 0

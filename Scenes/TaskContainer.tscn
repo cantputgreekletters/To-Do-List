@@ -1,7 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://kuiendx2btv"]
+[gd_scene load_steps=3 format=3 uid="uid://kuiendx2btv"]
 
 [ext_resource type="Script" uid="uid://pjlw74uo1c1m" path="res://Scripts/TaskContainer.gd" id="1_2itd6"]
+[ext_resource type="Theme" uid="uid://ccy6il8qgr4ju" path="res://Objects/task_container_theme.tres" id="1_xbn4q"]
 
 [node name="TaskContainer" type="VBoxContainer"]
 size_flags_horizontal = 3
+theme = ExtResource("1_xbn4q")
 script = ExtResource("1_2itd6")

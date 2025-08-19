@@ -3,7 +3,7 @@ extends HBoxContainer
 class_name Task
 
 @onready var Task_Label : Label = $Label
-@onready var Task_Button : Button = $Button
+@onready var Task_Button : CheckBox = $CheckBox
 
 var title : String 
 var description : String
