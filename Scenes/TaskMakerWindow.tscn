@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmve84p5c6yvb"]
+[gd_scene load_steps=5 format=3 uid="uid://dmve84p5c6yvb"]
 
 [ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_dw6j0"]
 [ext_resource type="Script" uid="uid://comweo0bocn5t" path="res://Scripts/TaskMakerWindow.gd" id="1_fx0mm"]
+[ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="3_h71ho"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fx0mm"]
 font_color = Color(1, 0, 0, 1)
@@ -42,6 +43,8 @@ layout_mode = 2
 text = "Title was not filled!"
 label_settings = SubResource("LabelSettings_fx0mm")
 horizontal_alignment = 1
+script = ExtResource("3_h71ho")
+metadata/_custom_type_script = "uid://djply5jk65h2v"
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="MainContainer"]
 layout_mode = 2

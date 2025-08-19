@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://cokgdecahl3ud"]
+
+[ext_resource type="Script" uid="uid://io6hgoei2jwh" path="res://Scripts/Folder_Tab_Container.gd" id="1_eww0r"]
+[ext_resource type="Script" uid="uid://bx61yg4oguqp7" path="res://Scripts/description_text.gd" id="1_sd2xo"]
+
+[node name="TabContainer" type="TabContainer"]
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.15
+current_tab = 0
+script = ExtResource("1_eww0r")
+
+[node name="Folders" type="VBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+metadata/_tab_index = 0
+
+[node name="FolderContainer" type="VBoxContainer" parent="Folders"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="FolderButtonsContainer" type="HBoxContainer" parent="Folders"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Create" type="Button" parent="Folders/FolderButtonsContainer"]
+layout_mode = 2
+text = "Create"
+
+[node name="Delete" type="Button" parent="Folders/FolderButtonsContainer"]
+layout_mode = 2
+text = "Delete"
+
+[node name="Description" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 2
+script = ExtResource("1_sd2xo")
+metadata/_tab_index = 1

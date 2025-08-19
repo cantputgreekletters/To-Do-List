@@ -27,26 +27,23 @@ func create(Title : String, Description : String, State : bool) -> void:
     title = Title
     description = Description
     state = State
-
-func ToDictionary() -> Dictionary:
-    update_stuff()
-    return {title : {
-        "description" : description,
-        "state" : state
-        }           
-    }
+    
+func create_and_save(Title : String, Description : String, State : bool) -> void:
+    create(Title, Description, State)
+    Global.AddTaskToDictionary(title, description, state)
 
 func _on_button_toggled(toggled_on : bool) -> void:
     state = toggled_on
+    Global.ChangeStateOfTask(title, toggled_on)
 
 func _on_delete_button_pressed() -> void:
+    Global.DeleteTask(title)
     queue_free()
 
 func _on_press_task() -> void:
-    pass
+    Global.Set_Selected_Description(description)
 
 func _on_double_press_task() -> void:
-    print("double pressed")
     Global.CreateViewerWindow(title, description)
 
 func _gui_input(event: InputEvent) -> void:

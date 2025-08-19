@@ -3,64 +3,54 @@ extends VBoxContainer
 class_name TaskContainer
 
 @export var Create_Button : Button
+@export var Save_Button : Button
+@export var Save_Indicator : FadingLabel
 
 const TaskInstance : Resource = preload("res://Scenes/Task.tscn")
 const CreateWindowInstance : Resource = preload("res://Scenes/TaskMakerWindow.tscn")
-const SAVE_PATH : String = "user://saved_data.json"
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    print("HELLO WORLD")
     Create_Button.connect("pressed", OnPressCreateButton)
-    print("Bye world")
-    if(not FileAccess.file_exists(SAVE_PATH)):
-        print("Saving file did not exist")
-        var file : FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-        file.close()
-        print("Making saving file")
-
-func make_empty_task() -> void:
-    #TODO for now 
+    Save_Button.connect("pressed", OnPressSaveButton)
+    _LoadTasks(Global.DefaultFolderName)
+    Global.connect("ChangedCurrentFolder", _On_Change_Folder)
+    Global.connect("IsSaving", Save_Indicator.FadeIn)
+    
+"""
+func make_empty_task() -> void: 
     var new_task : Task = TaskInstance.instantiate()
     add_child(new_task)
+"""
 
-func make_task(Title : String, Description : String, State : bool) -> void:
+func generate_task(Title : String, Description : String, State : bool) -> void:
     var new_task : Task = TaskInstance.instantiate()
     new_task.create(Title, Description, State)
     add_child(new_task)
 
-func _CreateTasks(D : Dictionary) -> void:
-    for key in D.keys():
-        var descr : String = D[key]["description"]
-        var state : bool = D[key]["state"]
-        make_task(key, descr, state)
-        
-func LoadTasksFromFile() -> void:
-    var file : FileAccess = FileAccess.open(SAVE_PATH, FileAccess.READ)
-    if(not file.is_open()):
-        print("Could not open file when trying to load")
-        return
-    var contents : String = file.get_as_text()
-    file.close()
-    _CreateTasks(JSON.parse_string(contents))
+func make_new_task(Title : String, Description : String, State : bool) -> void:
+    var new_task : Task = TaskInstance.instantiate()
+    new_task.create_and_save(Title, Description, State)
+    add_child(new_task)
 
-func SaveTasksToFile() -> void:
-    var D : Dictionary = {}
+func _UnloadCurrentTasks() -> void:
     for child : Task in get_children():
-        if child is not Task:
-            continue
-        
-        var d := child.ToDictionary()
-        var key : String = d.keys()[0]
-        D[key] = d[key]
+        child.queue_free()
 
-    var file : FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-    if(not file.is_open()):
-        print("Could not open file when trying to save")
-        return
-    var contents : String = JSON.stringify(D)
-    file.store_string(contents)
-    file.close()   
+func _LoadTasks(folder_name : String) -> void:
+    for key in Global.tasks_dictionary[folder_name]:
+        var descr : String = Global.tasks_dictionary[folder_name][key]["description"]
+        var state : bool = Global.tasks_dictionary[folder_name][key]["state"]
+        generate_task(key, descr, state)
+
+func GetUsedTaskTitles() -> Array[String]:
+    var titles : Array[String] = []
+    for child : Task in get_children():
+        if(child is not Task): continue
+        titles.append(child.title)
+    return titles
+
 
 func _MakeCreateTaskWindow() -> void:
     if(Global.has_active_window): return
@@ -70,3 +60,12 @@ func _MakeCreateTaskWindow() -> void:
 
 func OnPressCreateButton() -> void: 
     _MakeCreateTaskWindow()
+
+func OnPressSaveButton() -> void:
+    Global.Save()
+
+func _On_Change_Folder() -> void:
+    _UnloadCurrentTasks()
+    _LoadTasks(Global.Get_Current_Folder_Name())
+
+#add ctrl + s saving

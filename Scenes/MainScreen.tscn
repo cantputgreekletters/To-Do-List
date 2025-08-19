@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq8764g02vpdd"]
+[gd_scene load_steps=4 format=3 uid="uid://bq8764g02vpdd"]
 
 [ext_resource type="PackedScene" uid="uid://kuiendx2btv" path="res://Scenes/TaskContainer.tscn" id="1_wbu70"]
-[ext_resource type="Script" uid="uid://b5f04lu5dd55w" path="res://Scripts/Saving_Indicator.gd" id="2_ewbgq"]
+[ext_resource type="PackedScene" uid="uid://cokgdecahl3ud" path="res://Scenes/FolderTabContainer.tscn" id="2_0prsd"]
+[ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="2_ewbgq"]
 
 [node name="Control" type="VBoxContainer"]
 clip_contents = true
@@ -23,31 +24,36 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TaskContainer" parent="MainContainer/ScrollContainer" node_paths=PackedStringArray("Create_Button") instance=ExtResource("1_wbu70")]
+[node name="TaskContainer" parent="MainContainer/ScrollContainer" node_paths=PackedStringArray("Create_Button", "Save_Button", "Save_Indicator") instance=ExtResource("1_wbu70")]
 clip_children = 1
 clip_contents = true
 layout_mode = 2
 Create_Button = NodePath("../../../SettingsContainer/CreateButton")
+Save_Button = NodePath("../../../SettingsContainer/SaveButton")
+Save_Indicator = NodePath("../../../SettingsContainer/SavingIndicator")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MainContainer"]
-clip_contents = true
+[node name="TabContainer" parent="MainContainer" instance=ExtResource("2_0prsd")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.2
 
 [node name="SettingsContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
 alignment = 1
 
 [node name="CreateButton" type="Button" parent="SettingsContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Create"
 
+[node name="SaveButton" type="Button" parent="SettingsContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Save"
+
 [node name="SavingIndicator" type="Label" parent="SettingsContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Saving..."
 script = ExtResource("2_ewbgq")
+metadata/_custom_type_script = "uid://djply5jk65h2v"
