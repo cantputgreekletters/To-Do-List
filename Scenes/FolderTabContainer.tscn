@@ -28,16 +28,18 @@ theme = ExtResource("2_m3a4j")
 
 [node name="FolderButtonsContainer" type="HBoxContainer" parent="Folders"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 5
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
 [node name="Create" type="Button" parent="Folders/FolderButtonsContainer"]
 layout_mode = 2
+size_flags_horizontal = 7
 text = "Create"
 
 [node name="Delete" type="Button" parent="Folders/FolderButtonsContainer"]
 layout_mode = 2
+size_flags_horizontal = 7
 text = "Delete"
 
 [node name="Description" type="RichTextLabel" parent="."]

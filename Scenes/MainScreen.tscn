@@ -47,26 +47,32 @@ Save_Indicator = NodePath("../../../SettingsContainer/SavingIndicator")
 
 [node name="TabContainer" parent="Main/MainContainer" instance=ExtResource("2_0prsd")]
 layout_mode = 2
+size_flags_stretch_ratio = 0.2
 
 [node name="SettingsContainer" type="HBoxContainer" parent="Main"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
 alignment = 1
 
 [node name="CreateButton" type="Button" parent="Main/SettingsContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 5
+size_flags_vertical = 5
 text = "Create"
 
 [node name="SaveButton" type="Button" parent="Main/SettingsContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 5
+size_flags_vertical = 5
 text = "Save"
 
 [node name="SavingIndicator" type="Label" parent="Main/SettingsContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 5
+size_flags_vertical = 5
 text = "Saving..."
+horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("2_ewbgq")
 metadata/_custom_type_script = "uid://djply5jk65h2v"

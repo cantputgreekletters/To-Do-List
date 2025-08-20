@@ -24,7 +24,6 @@ clip_text = true
 [node name="CheckBox" type="CheckBox" parent="."]
 layout_mode = 2
 size_flags_vertical = 4
-size_flags_stretch_ratio = 0.1
 
 [node name="DeleteButton" type="Button" parent="."]
 layout_mode = 2
