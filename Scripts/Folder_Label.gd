@@ -12,11 +12,9 @@ func _init(Name : String) -> void:
     ChangeTitle(Name)
 
 func _gui_input(event: InputEvent) -> void:
-    print(event)
     if event is InputEventMouseButton:
         #FIXME it aint working chief
         if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-            print("CLICKED FOLDER")
             Global.Set_Current_Folder(title)
 
 func ChangeTitle(Name : String) -> void:

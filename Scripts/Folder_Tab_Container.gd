@@ -28,7 +28,6 @@ func _on_press_delete() -> void:
 
 func _load_folders() -> void:
     for key in Global.GetExistingFolders():
-        print(key)
         Generate_Folder(key)
 
 func Generate_Folder(Name : String) -> void:
