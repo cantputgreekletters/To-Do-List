@@ -3,55 +3,54 @@ extends Node
 const DefaultFolderName : String = "Default"
 
 const SAVE_PATH : String = "user://saved_data.json"
-const SETTINGS_PATH : String = "user://settings.json"
+const SETTINGS_PATH : String = "user://settings.tres"
+
+const SettingsClass = preload("res://Scripts/Settings_Script.gd")
 
 var has_active_window : bool = false
-var _selected_description : String = ""
+var Selected_Description : String = "" :
+    set(value):
+        Selected_Description = value
+        ChangedDescription.emit()
+    get():
+        return Selected_Description
 var ViewerWindowInstance : Resource = preload("res://Scenes/TaskViewerWindow.tscn")
 
-var _CurrentFolder : String = DefaultFolderName
+var CurrentFolder : String = DefaultFolderName:
+    set(value):
+        if(not tasks_dictionary.has(value)): 
+            print("Tried to change to a folder that does not exist")
+            return
+        CurrentFolder = value
+        ChangedCurrentFolder.emit()
+    get():
+        return CurrentFolder
 
 var tasks_dictionary : Dictionary
 
+var App_Settings : Settings
+
+var main_theme : Theme = preload("res://Objects/main_theme.tres")
+
 signal ChangedDescription()
 signal ChangedCurrentFolder()
+signal UpdatedFolders()
+signal UpdatedTasks()
 signal IsSaving()
 
 func _ready():
-    _CheckIfNecessaryFilesExist(SAVE_PATH)
-    _CheckIfNecessaryFilesExist(SETTINGS_PATH)
+    if not FileAccess.file_exists(SAVE_PATH):
+        tasks_dictionary[DefaultFolderName] = {}
+        SaveDictionary(tasks_dictionary, SAVE_PATH) 
     _load_tasks()
-
-func Set_Selected_Description(text : String) -> void:
-    _selected_description = text
-    ChangedDescription.emit()
-    
-
-func Set_Current_Folder(folder_name : String) -> void:
-    if(not tasks_dictionary.has(folder_name)): 
-        print("Tried to change to a folder that does not exist")
-        return
-    _CurrentFolder = folder_name
-    ChangedCurrentFolder.emit()
-
-func Get_Current_Folder_Name() -> String:
-    return _CurrentFolder
-
-func Get_Selected_Description() -> String:
-    return _selected_description
+    LoadSettings()
+    call_deferred("_apply_settings")
 
 func CreateViewerWindow(Title : String, Description : String = "") -> void:
     if(has_active_window): return
     var node : Window = ViewerWindowInstance.instantiate()
     get_node("/root").add_child(node)
     node.Init(Title, Description)   
-
-func _CheckIfNecessaryFilesExist(path : String) -> void:
-    if(not FileAccess.file_exists(path)):
-        print(path % "File %s did not exist.")
-        var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
-        file.close()
-        print(path % "Making %s")
 
 func SaveDictionary(D : Dictionary, path : String) -> void:
     var file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
@@ -61,6 +60,8 @@ func SaveDictionary(D : Dictionary, path : String) -> void:
     var contents : String = JSON.stringify(D)
     file.store_string(contents)
     file.close()
+
+#Tasks - - - - - -
 
 func Save() -> void:
     SaveDictionary(tasks_dictionary, SAVE_PATH)
@@ -82,27 +83,87 @@ func _load_tasks() -> void:
         tasks_dictionary[DefaultFolderName] = {}
 
 func AddTaskToDictionary(Title : String, Description : String, State : bool) ->void:
-    IsSaving.emit()
-    tasks_dictionary[_CurrentFolder][Title] = {
+    tasks_dictionary[CurrentFolder][Title] = {
         "description" : Description,
         "state" : State
     }
+    Save()
+    UpdatedTasks.emit()
+
 
 func ChangeStateOfTask(task_name : String, state : bool) -> void:
-    IsSaving.emit()
-    tasks_dictionary[_CurrentFolder][task_name]["state"] = state
+    tasks_dictionary[CurrentFolder][task_name]["state"] = state
+    Save()
 
 func DeleteTask(task_name : String) -> void:
-    IsSaving.emit()
-    tasks_dictionary[_CurrentFolder].erase(task_name)
+    tasks_dictionary[CurrentFolder].erase(task_name)
+    Save()
+    UpdatedTasks.emit()
+
+#Folders - - - - - - 
 
 func AddFolder(Name : String) -> void:
-    IsSaving.emit()
     tasks_dictionary[Name] = {}
+    Save()
+    UpdatedFolders.emit()
 
 func DeleteFolder(Name : String) -> void:
-    IsSaving.emit()
     tasks_dictionary.erase(Name)
+    Save()
+    UpdatedFolders.emit()
 
 func GetExistingFolders() -> Array:
     return tasks_dictionary.keys()
+
+func GetExistingTasks() -> Array:
+    return tasks_dictionary[CurrentFolder].keys()
+
+#Settings - - - - - -
+
+func LoadSettings() -> void:
+    App_Settings = ResourceLoader.load(SETTINGS_PATH, "Settings") as Settings
+    if(App_Settings == null):
+        print_debug("Could not load settings making default")
+        App_Settings = Settings.new()
+        SaveSettings()
+    else:
+        print_debug("Loaded settings")
+        print_debug(App_Settings)
+    _apply_settings()
+        
+        
+func SaveSettings() -> void:
+    _apply_settings()
+    IsSaving.emit()
+    var re = ResourceSaver.save(App_Settings, SETTINGS_PATH)
+    if(re != OK):
+        print_debug("Failed to save settings")
+    else:
+        print_debug("Saved settings")
+        
+
+func _apply_settings() -> void:
+    print_debug("applying changes")
+    #Label
+    main_theme.get_stylebox("normal", "Label").bg_color = Global.App_Settings.LabelBg
+    main_theme.set_font_size("font_size", "Label", Global.App_Settings.FontSize)
+    #RichTextlabel
+    main_theme.set_font_size("bold_font_size", "RichTextLabel", Global.App_Settings.FontSize)
+    main_theme.set_font_size("bold_italics_font_size", "RichTextLabel", Global.App_Settings.FontSize)
+    main_theme.set_font_size("italics_font_size", "RichTextLabel", Global.App_Settings.FontSize)
+    main_theme.set_font_size("mono_font_size", "RichTextLabel", Global.App_Settings.FontSize)
+    main_theme.set_font_size("normal_font_size", "RichTextLabel", Global.App_Settings.FontSize)
+    #Buttons
+    main_theme.set_color("font_color", "Button", Global.App_Settings.ButtonFontColor)
+    main_theme.get_stylebox("normal", "Button").bg_color = Global.App_Settings.ButtonBgNormalColor
+    main_theme.get_stylebox("pressed", "Button").bg_color = Global.App_Settings.ButtonBgPressedColor
+    main_theme.set_font_size("font_size", "Button", Global.App_Settings.FontSize)
+    #Tabs
+    main_theme.set_font_size("font_size", "TabBar", Global.App_Settings.FontSize)
+    main_theme.set_font_size("font_size", "TabContainer", Global.App_Settings.FontSize)
+    #LineEdit
+    main_theme.set_font_size("font_size", "LineEdit", Global.App_Settings.FontSize)
+
+    #Window
+    main_theme.get_stylebox("embedded_border", "Window").bg_color = Global.App_Settings.WindowColor
+    App_Settings.EmitChange()

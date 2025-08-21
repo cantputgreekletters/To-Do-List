@@ -10,7 +10,7 @@ extends Window
 
 const Warning_Empty_Title : String = "Title was not filled!"
 const Warning_Already_Using_Title : String = "Title name already been used!"
-var task_container : TaskContainer
+
 
 func _ready():
     Global.has_active_window = true
@@ -21,9 +21,6 @@ func _ready():
 func _exit_tree() -> void:
     Global.has_active_window = false
 
-func Init(Task_Container : TaskContainer) -> void:
-    task_container = Task_Container
-    
 
 func _check_if_filled_title() -> bool:
     var valid : bool = TitleInput.text.length() > 0
@@ -32,20 +29,15 @@ func _check_if_filled_title() -> bool:
     return valid
 
 func _check_if_valid_title() -> bool:
-    var valid : bool = not task_container.GetUsedTaskTitles().has(TitleInput.text)
+    var valid : bool = not Global.GetExistingTasks().has(TitleInput.text)
     if(not valid):
         FailLabel.text = Warning_Already_Using_Title
     return valid
 
-func SendDataToTaskContainer() -> void:
-    var Title : String = TitleInput.text
-    var Description : String = DescrInput.text
-    task_container.make_new_task(Title, Description, false)
-
 func _OnOkPress() -> void:
     var valid : bool = _check_if_filled_title() and _check_if_valid_title()
     if(valid):
-        SendDataToTaskContainer()
+        Global.AddTaskToDictionary(TitleInput.text, DescrInput.text, false)
         queue_free()
     else:
         FailLabel.FadeIn()

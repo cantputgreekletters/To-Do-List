@@ -15,7 +15,8 @@ func _ready() -> void:
     Create_Button.connect("pressed", OnPressCreateButton)
     Save_Button.connect("pressed", OnPressSaveButton)
     _LoadTasks(Global.DefaultFolderName)
-    Global.connect("ChangedCurrentFolder", _On_Change_Folder)
+    Global.connect("UpdatedTasks", _reload_tasks)
+    Global.connect("ChangedCurrentFolder", _reload_tasks)
     Global.connect("IsSaving", Save_Indicator.FadeIn)
     
 """
@@ -24,14 +25,9 @@ func make_empty_task() -> void:
     add_child(new_task)
 """
 
-func generate_task(Title : String, Description : String, State : bool) -> void:
+func _generate_task(Title : String, Description : String, State : bool) -> void:
     var new_task : Task = TaskInstance.instantiate()
     new_task.create(Title, Description, State)
-    add_child(new_task)
-
-func make_new_task(Title : String, Description : String, State : bool) -> void:
-    var new_task : Task = TaskInstance.instantiate()
-    new_task.create_and_save(Title, Description, State)
     add_child(new_task)
 
 func _UnloadCurrentTasks() -> void:
@@ -42,7 +38,11 @@ func _LoadTasks(folder_name : String) -> void:
     for key in Global.tasks_dictionary[folder_name]:
         var descr : String = Global.tasks_dictionary[folder_name][key]["description"]
         var state : bool = Global.tasks_dictionary[folder_name][key]["state"]
-        generate_task(key, descr, state)
+        _generate_task(key, descr, state)
+
+func _reload_tasks() -> void:
+    _UnloadCurrentTasks()
+    _LoadTasks(Global.CurrentFolder)
 
 func GetUsedTaskTitles() -> Array[String]:
     var titles : Array[String] = []
@@ -56,7 +56,7 @@ func _MakeCreateTaskWindow() -> void:
     if(Global.has_active_window): return
     var node : Window = CreateWindowInstance.instantiate()
     get_node("/root").add_child(node)
-    node.Init(self)
+
 
 func OnPressCreateButton() -> void: 
     _MakeCreateTaskWindow()
@@ -64,8 +64,4 @@ func OnPressCreateButton() -> void:
 func OnPressSaveButton() -> void:
     Global.Save()
 
-func _On_Change_Folder() -> void:
-    _UnloadCurrentTasks()
-    _LoadTasks(Global.Get_Current_Folder_Name())
-
-#add ctrl + s saving
+#TODO add ctrl + s saving

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dmve84p5c6yvb"]
 
-[ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_dw6j0"]
 [ext_resource type="Script" uid="uid://comweo0bocn5t" path="res://Scripts/TaskMakerWindow.gd" id="1_fx0mm"]
+[ext_resource type="Theme" uid="uid://bmv0t3c2gfe23" path="res://Objects/main_theme.tres" id="1_h71ho"]
 [ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="3_h71ho"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fx0mm"]
@@ -11,12 +11,15 @@ font_color = Color(1, 0, 0, 1)
 title = "Task Maker"
 initial_position = 2
 size = Vector2i(300, 350)
-theme = ExtResource("1_dw6j0")
+theme = ExtResource("1_h71ho")
 script = ExtResource("1_fx0mm")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
-offset_right = 300.0
-offset_bottom = 350.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_stretch_ratio = 16.05
 
 [node name="TextInput Container" type="VBoxContainer" parent="MainContainer"]

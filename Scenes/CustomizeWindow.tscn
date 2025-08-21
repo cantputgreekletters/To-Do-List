@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7rlnctace74u"]
+
+[ext_resource type="Script" uid="uid://vr4ls62d2gwj" path="res://Scripts/Customize_Window_Script.gd" id="1_n3nm0"]
+[ext_resource type="Theme" uid="uid://bmv0t3c2gfe23" path="res://Objects/main_theme.tres" id="1_o8vrn"]
+[ext_resource type="PackedScene" uid="uid://bj3pio43sk5mg" path="res://Scenes/ColorSelector.tscn" id="2_1kjte"]
+[ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="3_elv1j"]
+
+[node name="CustomizeWindow" type="Window"]
+title = "Customize"
+initial_position = 2
+size = Vector2i(600, 650)
+theme = ExtResource("1_o8vrn")
+script = ExtResource("1_n3nm0")
+
+[node name="Scroll Container" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Scroll Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LabelFontColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Label font color"
+
+[node name="LabelBackground" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Label background color"
+
+[node name="ButtonFontColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Button font color"
+
+[node name="ButtonBgNColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Button normal background"
+
+[node name="ButtonBgPColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Button pressed background"
+
+[node name="BackgroundColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Background color"
+
+[node name="WindowColor" parent="Scroll Container/VBoxContainer" instance=ExtResource("2_1kjte")]
+layout_mode = 2
+LabelText = "Window color"
+
+[node name="Hbox" type="HBoxContainer" parent="Scroll Container/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Scroll Container/VBoxContainer/Hbox"]
+layout_mode = 2
+text = "Font Size"
+
+[node name="LineEdit" type="LineEdit" parent="Scroll Container/VBoxContainer/Hbox"]
+layout_mode = 2
+size_flags_horizontal = 10
+placeholder_text = "36"
+
+[node name="Warning" type="Label" parent="Scroll Container/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_elv1j")
+metadata/_custom_type_script = "uid://djply5jk65h2v"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 145.0
+offset_top = 609.0
+offset_right = 445.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 10
+text = "Submit"

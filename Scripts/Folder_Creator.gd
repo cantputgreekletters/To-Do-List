@@ -7,7 +7,8 @@ extends Window
 const Warning_Empty_Name : String = "Name is empty!"
 const Warning_Name_Taken : String = "Folder name already been used"
 
-var folder_tab_container : Folder_Tab_Container
+#TODO rid this of folder_tab_container
+
 func _ready():
     Global.has_active_window = true
     SubmitButton.connect("pressed", _On_Press_Submit)
@@ -15,9 +16,6 @@ func _ready():
 
 func _exit_tree() -> void:
     Global.has_active_window = false
-
-func Init(container : Folder_Tab_Container):
-    folder_tab_container = container
 
 func _check_if_used_name() -> bool:
     var is_used : bool = NameInput.text in Global.GetExistingFolders()
@@ -36,7 +34,7 @@ func _On_Press_Submit() -> void:
     if(not valid):
         WarningLabel.FadeIn()
     else:
-        folder_tab_container.Add_Folder(NameInput.text)
+        Global.AddFolder(NameInput.text)
         queue_free()
 
 func _input(event: InputEvent) -> void:

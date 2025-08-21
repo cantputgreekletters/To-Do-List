@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://0uvg57g3frrr"]
 
-[ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_iy72l"]
+[ext_resource type="Theme" uid="uid://bmv0t3c2gfe23" path="res://Objects/main_theme.tres" id="1_iy72l"]
 [ext_resource type="Script" uid="uid://bgo6k5c287vs2" path="res://Scripts/TaskViewerWindow.gd" id="1_u61hc"]
 
 [node name="TaskViewerWindow" type="Window"]
@@ -11,8 +11,11 @@ theme = ExtResource("1_iy72l")
 script = ExtResource("1_u61hc")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
-offset_right = 300.0
-offset_bottom = 350.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="MainContainer"]
 layout_mode = 2

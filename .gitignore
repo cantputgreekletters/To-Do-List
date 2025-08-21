@@ -2,5 +2,6 @@
 .godot/
 /android/
 task_structure.json
+settings_structure.json
 TODO.txt
 .vscode

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj3pio43sk5mg"]
+
+[ext_resource type="Script" uid="uid://dcqwy3axj0ajt" path="res://Scripts/Color_Selector.gd" id="1_saoie"]
+
+[node name="ColorSelector" type="HBoxContainer"]
+offset_right = 13.0
+offset_bottom = 35.0
+script = ExtResource("1_saoie")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1

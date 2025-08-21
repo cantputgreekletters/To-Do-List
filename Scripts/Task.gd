@@ -41,7 +41,7 @@ func _on_delete_button_pressed() -> void:
     queue_free()
 
 func _on_press_task() -> void:
-    Global.Set_Selected_Description(description)
+    Global.Selected_Description = description
 
 func _on_double_press_task() -> void:
     Global.CreateViewerWindow(title, description)

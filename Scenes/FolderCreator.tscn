@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1wc4nwp3hfsl"]
 
 [ext_resource type="Script" uid="uid://d1wjwok3hjjnk" path="res://Scripts/Folder_Creator.gd" id="1_jnbmi"]
-[ext_resource type="Theme" uid="uid://bqfhxp0i5un22" path="res://Objects/window_theme.tres" id="1_mm5ue"]
+[ext_resource type="Theme" uid="uid://bmv0t3c2gfe23" path="res://Objects/main_theme.tres" id="1_mm5ue"]
 [ext_resource type="Script" uid="uid://djply5jk65h2v" path="res://Scripts/FadingLabel.gd" id="2_da4q2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_da4q2"]
@@ -14,8 +14,11 @@ theme = ExtResource("1_mm5ue")
 script = ExtResource("1_jnbmi")
 
 [node name="Container" type="VBoxContainer" parent="."]
-offset_right = 300.0
-offset_bottom = 100.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="NameInput" type="LineEdit" parent="Container"]
 layout_mode = 2

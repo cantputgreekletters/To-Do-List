@@ -13,9 +13,8 @@ func _init(Name : String) -> void:
 
 func _gui_input(event: InputEvent) -> void:
     if event is InputEventMouseButton:
-        #FIXME it aint working chief
         if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-            Global.Set_Current_Folder(title)
+            Global.CurrentFolder = title
 
 func ChangeTitle(Name : String) -> void:
     title = Name

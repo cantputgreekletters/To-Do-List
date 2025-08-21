@@ -5,4 +5,4 @@ func _ready():
     Global.connect("ChangedDescription", _update_text)
 
 func _update_text() -> void:
-    text = Global.Get_Selected_Description()
+    text = Global.Selected_Description
